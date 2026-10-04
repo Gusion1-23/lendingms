@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BorrowHub – Software for lending libraries</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="site">
+ <header class="sh"><div class="logo"><i>B</i><div><strong>BorrowHub</strong><small>Library of things</small></div></div>
+  <nav><a href="#catalogue">Catalogue</a><a href="#features">Features</a><button class="btn" data-go="1">Staff login</button></nav></header>
+ <section class="hero"><div class="wrap"><div>
+  <h1>Lend anything. Know where everything is.</h1>
+  <p>Equipment, tools, cameras, kits. Manage your items, members and loans in one place, and let members browse and borrow online.</p>
+  <a href="#catalogue" class="btn" style="text-decoration:none;display:inline-block">Browse the catalogue</a><button class="btn ghost" data-go="1">Staff login</button></div>
+  <div class="feed"><h3>Latest borrows</h3><ul id="latest"></ul></div></div></section>
+ <section class="band" id="features"><div class="wrap"><h2>Everything you need to run a lending library</h2><p>One system for staff and members.</p>
+  <div class="feat">
+   <div class="card"><div class="ic">📦</div><h3>Item management</h3><p>Track every item, how many are in, and how many are out.</p></div>
+   <div class="card"><div class="ic">🔄</div><h3>Loans and returns</h3><p>Check items out, mark them back in and see what is overdue.</p></div>
+   <div class="card"><div class="ic">👥</div><h3>Member records</h3><p>Keep contact details and each member’s active loans together.</p></div>
+   <div class="card"><div class="ic">🌐</div><h3>Online catalogue</h3><p>Members see live availability and borrow without calling you.</p></div>
+   <div class="card"><div class="ic">⏰</div><h3>Overdue tracking</h3><p>Late loans are flagged with the number of days late.</p></div>
+   <div class="card"><div class="ic">📤</div><h3>Export your data</h3><p>Download your loan history as a CSV file at any time.</p></div>
+  </div></div></section>
+ <section class="band alt" id="catalogue"><div class="wrap"><h2>Catalogue</h2><p>Live availability. Pick an item to borrow it.</p>
+  <div class="tools"><input id="cq" placeholder="Search the catalogue…" aria-label="Search catalogue"></div>
+  <div class="chips" id="chips"></div><div class="grid items" id="cat"></div></div></section>
+ <footer class="sf">© BorrowHub. A demo lending library system.</footer>
+</div>
+<div id="login"><form class="lc" id="lf" novalidate>
+  <div class="logo" style="margin:0"><i>B</i><div><strong>BorrowHub</strong><small>Borrowing system</small></div></div>
+  <h1>Sign in</h1><p>Use your administrator account to manage items and loans.</p>
+  <label for="u">Username</label><input id="u" autocomplete="username">
+  <label for="pw">Password</label><div class="pwrow"><input id="pw" type="password" autocomplete="current-password"><button type="button" class="btn ghost sm" id="tg">Show</button></div>
+  <div class="err" id="lerr" role="alert"></div>
+  <button class="btn">Sign in</button>
+  <small class="hint">Demo account: admin / admin123</small>
+  <button type="button" class="back" data-go="0">← Back to website</button>
+</form></div>
+<aside class="side">
+  <div class="logo"><i>B</i><div><strong>BorrowHub</strong><small>Borrowing system</small></div></div>
+  <button class="nav on" data-p="dashboard">🏠 Dashboard</button>
+  <button class="nav" data-p="items">📦 Items</button>
+  <button class="nav" data-p="borrowers">👥 Members</button>
+  <button class="nav" data-p="transactions">🔄 Loans <b id="navOver" hidden></b></button>
+  <div class="sp"></div>
+  <button class="nav" id="resetBtn">↺ Reset demo data</button>
+  <button class="nav" id="logout">🚪 Log out</button>
+</aside>
+<main>
+  <header class="top">
+    <div><h1 id="title">Dashboard</h1><p id="sub"></p></div>
+    <div class="who"><div class="av">AD</div><div><strong>Admin</strong><br><small style="color:var(--mut)">Administrator</small></div></div>
+  </header>
+
+  <section class="page on" id="dashboard">
+    <div class="grid g4" id="stats"></div>
+    <div class="sec"><div><h2>Quick actions</h2><p>Start a loan or add to your records</p></div></div>
+    <div class="tools">
+      <button class="btn" data-a="borrow">+ New borrowing</button>
+      <button class="btn ghost" data-a="item">+ Add item</button>
+      <button class="btn ghost" data-a="person">+ Add borrower</button>
+    </div>
+    <div class="sec"><div><h2>Needs attention</h2><p>Overdue and due soon</p></div><button class="btn ghost sm" data-p="transactions">View all</button></div>
+    <div class="tw"><table><thead><tr><th>Borrower</th><th>Item</th><th>Due</th><th>Status</th><th></th></tr></thead><tbody id="attn"></tbody></table></div>
+  </section>
+
+  <section class="page" id="items">
+    <div class="sec"><div><h2>Items</h2><p>Inventory and live availability</p></div><button class="btn" data-a="item">+ Add item</button></div>
+    <div class="tools"><input id="iq" placeholder="Search items…" aria-label="Search items"></div>
+    <div class="grid items" id="itemGrid"></div>
+  </section>
+
+  <section class="page" id="borrowers">
+    <div class="sec"><div><h2>Borrowers</h2><p>Registered people and their active loans</p></div><button class="btn" data-a="person">+ Add borrower</button></div>
+    <div class="tw"><table><thead><tr><th>Name</th><th>ID</th><th>Email</th><th>Active loans</th><th>Status</th></tr></thead><tbody id="people"></tbody></table></div>
+  </section>
+
+  <section class="page" id="transactions">
+    <div class="sec"><div><h2>Transactions</h2><p>Borrowing and return history</p></div><div class="tools" style="margin:0"><button class="btn ghost" id="csv">Export CSV</button><button class="btn" data-a="borrow">+ New borrowing</button></div></div>
+    <div class="tools"><input id="tq" placeholder="Search borrower or item…" aria-label="Search transactions"><select id="ts" aria-label="Filter status"><option value="">All statuses</option><option value="borrowed">Borrowed</option><option value="overdue">Overdue</option><option value="returned">Returned</option></select></div>
+    <div class="tw"><table><thead><tr><th>ID</th><th>Borrower</th><th>Item</th><th>Qty</th><th>Borrowed</th><th>Due</th><th>Status</th><th></th></tr></thead><tbody id="txs"></tbody></table></div>
+  </section>
+
+</main>
+
+<div class="modal" id="modal"><div class="mc" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt"></h2><p id="mp"></p><form id="form" novalidate><div id="fields"></div><div class="err" id="err" role="alert"></div><div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn" id="ok"></button></div></form></div></div>
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
